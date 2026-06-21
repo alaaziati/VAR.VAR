@@ -23,7 +23,6 @@
             user-select: none;
         }
 
-        /* نظام تقسيم الغرفة */
         .var-container {
             display: grid;
             grid-template-columns: 280px 1fr 300px;
@@ -33,7 +32,6 @@
             box-sizing: border-box;
         }
 
-        /* اللوحات الجانبية */
         .panel {
             background: var(--panel-color);
             border-radius: 8px;
@@ -44,7 +42,6 @@
             gap: 15px;
         }
 
-        /* الشاشة الرئيسية للـ VAR */
         .main-monitor-area {
             display: flex;
             flex-direction: column;
@@ -71,7 +68,6 @@
             object-fit: cover;
         }
 
-        /* قماش رسم خطوط التسلل */
         canvas {
             position: absolute;
             top: 0;
@@ -82,7 +78,6 @@
             cursor: crosshair;
         }
 
-        /* مؤشرات البث الحية */
         .live-indicator {
             position: absolute;
             top: 15px;
@@ -109,7 +104,6 @@
             color: rgba(255, 255, 255, 0.3);
         }
 
-        /* زوايا الكاميرات المتعددة */
         .camera-feeds {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -145,7 +139,6 @@
             border-radius: 3px;
         }
 
-        /* أزرار التحكم */
         .controls-row {
             display: flex;
             gap: 10px;
@@ -170,17 +163,11 @@
             background: #344870;
         }
 
-        button.active {
-            background: var(--accent-color);
-            color: black;
-        }
-
         .btn-danger {
             background: var(--danger-color);
         }
         .btn-danger:hover { background: #cc0000; }
 
-        /* نظام الصوتيات والـتواصل */
         .comms-status {
             display: flex;
             align-items: center;
@@ -197,7 +184,6 @@
             border-radius: 50%;
         }
 
-        /* زلاجة التحكم بالسرعة */
         .timeline-container {
             display: flex;
             align-items: center;
@@ -232,9 +218,7 @@
                 <div class="live-indicator" id="liveTag">V O R - LIVE</div>
                 <div class="watermark" id="camWatermark">CAM 1 - MAIN</div>
                 
-                <video id="mainVideo" loop muted autoplay crossorigin="anonymous">
-                    <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
-                </video>
+                <video id="mainVideo" loop muted autoplay src="https://vjs.zencdn.net/v/oceans.mp4"></video>
                 <canvas id="lineCanvas"></canvas>
             </div>
 
@@ -252,20 +236,20 @@
             </div>
 
             <div class="camera-feeds">
-                <div class="cam-box active" onclick="switchCamera(1, this)">
-                    <video muted loop autoplay><source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4"></video>
+                <div class="cam-box active" onclick="switchCamera(1, 'https://vjs.zencdn.net/v/oceans.mp4', this)">
+                    <video muted loop autoplay src="https://vjs.zencdn.net/v/oceans.mp4"></video>
                     <div class="cam-label">CAM 1 (رئيسية)</div>
                 </div>
-                <div class="cam-box" onclick="switchCamera(2, this)">
-                    <video muted loop autoplay><source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4" type="video/mp4"></video>
+                <div class="cam-box" onclick="switchCamera(2, 'https://html5demos.com/assets/dizzy.mp4', this)">
+                    <video muted loop autoplay src="https://html5demos.com/assets/dizzy.mp4"></video>
                     <div class="cam-label">CAM 2 (تسلل)</div>
                 </div>
-                <div class="cam-box" onclick="switchCamera(3, this)">
-                    <video muted loop autoplay><source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4"></video>
+                <div class="cam-box" onclick="switchCamera(3, 'https://www.w3schools.com/html/mov_bbb.mp4', this)">
+                    <video muted loop autoplay src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
                     <div class="cam-label">CAM 3 (خط المرمى)</div>
                 </div>
-                <div class="cam-box" onclick="switchCamera(4, this)">
-                    <video muted loop autoplay><source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4" type="video/mp4"></video>
+                <div class="cam-box" onclick="switchCamera(4, 'https://media.w3.org/2010/05/sintel/trailer_hd.mp4', this)">
+                    <video muted loop autoplay src="https://media.w3.org/2010/05/sintel/trailer_hd.mp4"></video>
                     <div class="cam-label">CAM 4 (عكسية)</div>
                 </div>
             </div>
@@ -277,18 +261,13 @@
                 <div class="status-dot"></div>
                 <span>الاتصال مع حكم الساحة: نشط</span>
             </div>
-            
             <hr style="border-color: #24324f; width: 100%;">
-            
-            <h3>إجراءات الـ VAR</h3>
             <button class="btn-danger" id="onFieldReviewBtn" onclick="toggleOFR()">طلب مراجعة شاشة الساحة (OFR)</button>
-            
             <hr style="border-color: #24324f; width: 100%;">
-            
             <h3>القرار النهائي المقترح</h3>
             <button style="background: #2e7d32;" onclick="triggerDecision('ركلة جزاء')">ركلة جزاء</button>
-            <button style="background: #c62828;" onclick="triggerDecision('بطاقة حمراء')">بطاقة حمراء مباشر</button>
-            <button style="background: #1565c0;" onclick="triggerDecision('لا يوجد تسلل / هدف صحيح')">هدف صحيح</button>
+            <button style="background: #c62828;" onclick="triggerDecision('بطاقة حمراء')">بطاقة حمراء</button>
+            <button style="background: #1565c0;" onclick="triggerDecision('هدف صحيح')">هدف صحيح</button>
         </div>
     </div>
 
@@ -300,7 +279,6 @@
         let lineColor = '#ff3333';
         let lines = [];
 
-        // ضبط أبعاد الكانفاس لتطابق الفيديو
         function resizeCanvas() {
             canvas.width = canvas.offsetWidth;
             canvas.height = canvas.offsetHeight;
@@ -309,7 +287,6 @@
         window.addEventListener('load', resizeCanvas);
         window.addEventListener('resize', resizeCanvas);
 
-        // تشغيل وإيقاف الفيديو
         function togglePlay() {
             if (video.paused) {
                 video.play();
@@ -320,57 +297,44 @@
             }
         }
 
-        // التحكم بالسرعة
         function changeSpeed(speed) {
             video.playbackRate = speed;
         }
 
-        // تقديم/تأخير بالفريمات (للدقة)
         function stepFrame(direction) {
             video.pause();
             document.getElementById('playBtn').innerText = 'تشغيل';
-            video.currentTime += direction * 0.04; // فريم تقريبي (25 فريم بالثانية)
+            video.currentTime += direction * 0.04; 
         }
 
-        // تحديث التايملاين تلقائياً
         video.addEventListener('timeupdate', () => {
             const value = (video.currentTime / video.duration) * 100;
             timeline.value = value || 0;
         });
 
-        // التقديم والتأخير عبر التايملاين
         timeline.addEventListener('input', () => {
             const time = (timeline.value / 100) * video.duration;
             video.currentTime = time;
         });
 
-        // تغيير الكاميرات
-        function switchCamera(camNumber, element) {
-            // إزالة الكلاس النشط من الكاميرات الأخرى
+        function switchCamera(camNumber, videoSrc, element) {
             document.querySelectorAll('.cam-box').forEach(box => box.classList.remove('active'));
             element.classList.add('active');
             
-            // تغيير مصدر الفيديو الرئيسي بناءً على الكاميرا المختارة
-            const srcVideo = element.querySelector('source').src;
-            video.querySelector('source').src = srcVideo;
-            video.load();
+            video.src = videoSrc;
             video.play();
             document.getElementById('playBtn').innerText = 'إيقاف مؤقت';
+            
             document.getElementById('camWatermark').innerText = `CAM ${camNumber} - ` + (camNumber===2 ? 'OFFSIDE VIEW' : camNumber===3 ? 'GOAL LINE' : 'LIVE FEED');
             clearLines();
         }
 
-        // رسم خطوط التسلل ثلاثية الأبعاد (محاكاة)
-        function setLineColor(color) {
-            lineColor = color;
-        }
+        function setLineColor(color) { lineColor = color; }
 
         canvas.addEventListener('mousedown', (e) => {
             const rect = canvas.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
-            
-            // إضافة خط أفقي يمتد عبر الشاشة (محاكاة لخطوط التسلل بمنظور مائل بسيط)
             lines.push({ y: y, color: lineColor });
             redrawLines();
         });
@@ -381,7 +345,6 @@
                 ctx.beginPath();
                 ctx.strokeStyle = line.color;
                 ctx.lineWidth = 3;
-                // رسم خط مائل قليلاً لمحاكاة المنظور ثلاثي الأبعاد للملعب
                 ctx.moveTo(0, line.y - 10);
                 ctx.lineTo(canvas.width, line.y + 10);
                 ctx.stroke();
@@ -393,7 +356,6 @@
             ctx.clearRect(0, 0, canvas.width, canvas.height);
         }
 
-        // طلب مراجعة الحكم للشاشة على أرضية الملعب (OFR)
         function toggleOFR() {
             const wrapper = document.getElementById('mainScreenWrapper');
             const btn = document.getElementById('onFieldReviewBtn');
@@ -413,7 +375,6 @@
             }
         }
 
-        // إطلاق القرار النهائي
         function triggerDecision(decisionType) {
             alert(`⚠️ تم إرسال القرار النهائي إلى الحكم الرئيسي: [ ${decisionType} ]`);
         }
